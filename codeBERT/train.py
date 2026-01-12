@@ -160,4 +160,6 @@ print("Evaluation metrics:", metrics)
 # Save & Push Model
 # -----------------------------
 trainer.save_model(model_dir)
-trainer.push_to_hub(f'{hugginface_username}/{model_dir}')
+
+if push_to_hub:
+    trainer.push_to_hub(f'{hugginface_username}/{model_dir}')
