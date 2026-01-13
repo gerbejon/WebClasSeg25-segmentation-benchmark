@@ -27,6 +27,8 @@ lr = args.lr if args.lr is not None else 2e-5
 output_dir = args.output_dir if args.output_dir is not None else f"./codeBERT/results_{classification}_{modelversion}"
 push_to_hub = args.push_to_hub
 
+print(args)
+
 # -----------------------------
 # Dataset Loading
 # -----------------------------

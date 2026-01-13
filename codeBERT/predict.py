@@ -110,7 +110,7 @@ def run_prediction(args):
     print(f"Loaded dataset: {dataset_name}")
 
     # Load label map
-    id2label_path = os.path.join(rootdir, f"id2label_{args.classification}.json")
+    id2label_path = os.path.join(rootdir, f"./data/id2label_{args.classification}.json")
     with open(id2label_path, "r") as f:
         id2label = json.load(f)
 
@@ -121,11 +121,11 @@ def run_prediction(args):
         page_id = row["page_id"]
         html = row["html"]
         results_page[page_id] = list(process_page(html, tokenizer, model, args.modelversion))
-        if counter >= 2:
-            break
+        # if counter >= 2:
+        #     break
 
     # Merge with ground truth
-    ann_path = os.path.join(rootdir, "data/annotations.json")
+    ann_path = os.path.join(rootdir, "./data/annotations.json")
     with open(ann_path, "r") as f:
         annotations = json.load(f)
 
