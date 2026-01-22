@@ -1,0 +1,19 @@
+# webclasseg25-visual-mc.yaml
+
+path: ./YOLO/datasets/webclasseg25-visual-mc-seg
+train: train.txt
+val: test.txt
+
+#nc: 8   # number of classes
+#names: ["none", "header", "maincontent", "title", "image", "footer", "advertisement", "navigation"]
+
+names:
+  0: "information1"
+  1: "information2"
+  2: "interaction"
+  3: "transaction1"
+  4: "transaction2"
+  5: "transaction3"
+  6: "integration1"
+  7: "integration2"
+  8: "none"

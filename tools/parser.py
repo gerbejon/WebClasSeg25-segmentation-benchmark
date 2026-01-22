@@ -3,7 +3,9 @@ import argparse
 
 def get_common_parser(description: str = "WebClasSeg25 model script"):
     """Return a base ArgumentParser with common training arguments."""
-    parser = argparse.ArgumentParser(description=description)
+    parser = argparse.ArgumentParser(description=description,
+                                     add_help=False,
+                                     )
 
     parser.add_argument(
         "--classification",
@@ -62,8 +64,32 @@ def get_common_parser(description: str = "WebClasSeg25 model script"):
     return parser
 
 
-def parse_args(description: str = "WebClasSeg25 model training script"):
+def parse_args(model, description: str = "WebClasSeg25 model training script"):
     """Parse arguments and return them as a Namespace."""
-    parser = get_common_parser(description)
-    args = parser.parse_args()
-    return args
+    if model == 'roberta' or model == 'codebert':
+        parser = get_common_parser(description)
+        args = parser.parse_args()
+        return args
+    elif model == 'yolo':
+        parser = get_yolo_parser()
+        args = parser.parse_args()
+        return args
+    else:
+        print('Please provide valid model ["roberta", "codebert", "yolo"]')
+
+
+def get_yolo_parser(description: str = "WebClasSeg25 segmentation model training"):
+    common_parser = get_common_parser()
+
+    parser = argparse.ArgumentParser(
+        description=description,
+        parents=[common_parser],
+    )
+
+    common_parser.add_argument(
+        "--segmentation",
+        action="store_true",
+        help="Use model for segmentation.",
+    )
+
+    return common_parser

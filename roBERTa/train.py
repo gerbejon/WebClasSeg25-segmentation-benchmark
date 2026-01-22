@@ -32,7 +32,7 @@ resume = args.resume
 epochs = args.epochs if args.epochs is not None else 4
 batch_size = args.batch_size if args.batch_size is not None else 8
 lr = args.lr if args.lr is not None else 2e-5
-output_dir = args.output_dir if args.output_dir is not None else f"./roberta_base/results_{classification}_{modelversion}"
+output_dir = args.output_dir if args.output_dir is not None else f"./roBERTa/results_{classification}_{modelversion}"
 push_to_hub = args.push_to_hub
 
 # -----------------------------

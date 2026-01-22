@@ -1,0 +1,17 @@
+# webclasseg25-visual-fc.yaml
+
+path: webclasseg25-visual-fc-seg
+train: train.txt
+val: test.txt
+
+#nc: 8   # number of classes
+#names: ["none", "header", "maincontent", "title", "image", "footer", "advertisement", "navigation"]
+
+names:
+  0: "header"
+  1: "maincontent"
+  2: "title"
+  3: "image"
+  4: "footer"
+  5: "advertisement"
+  6: "navigation"

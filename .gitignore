@@ -1,5 +1,8 @@
 .idea/
 credentials.json
-.venv
+.venv*
 __pycache__
 result
+datasets
+*.pt
+runs
