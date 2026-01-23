@@ -103,9 +103,6 @@ def create_txt_files(dataset_name: str):
 
 
 
-
-
-
 if __name__ == '__main__':
     parser = get_yolo_parser('Parser for YOLO model')
     args = parser.parse_args()

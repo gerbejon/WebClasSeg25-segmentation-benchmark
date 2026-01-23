@@ -1,6 +1,6 @@
 # webclasseg25-visual-mc.yaml
 
-path: ./YOLO/datasets/webclasseg25-visual-mc-seg
+path: webclasseg25-visual-mc-seg
 train: train.txt
 val: test.txt
 

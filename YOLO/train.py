@@ -2,23 +2,24 @@ from ultralytics import YOLO
 import torch
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tools.parser import parse_args
-
 
 args = parse_args(model='yolo', description='Yolo training')
 print(args)
 classification = args.classification
 modelversion = args.modelversion
-output_dir = args.output_dir if args.output_dir is not None else f"./YOLO/results_{classification}_{modelversion}"
+output_dir = args.output_dir if args.output_dir is not None else f"./YOLO/models"
 epochs = args.epochs if args.epochs is not None else 200
+os.makedirs(output_dir, exist_ok=True)
 
 
 # segm = sys.argv[1]
 # version = 'v1'
 
 # Load a pretrained YOLO11n model
-model = YOLO("yolo11n-seg.pt")
+model = YOLO("yolo11n.pt")
 
 # Train the model on the COCO8 dataset for 100 epochs
 train_results = model.train(
@@ -29,7 +30,7 @@ train_results = model.train(
     device=0,  # Device to run on (e.g., 'cpu', 0, [0,1,2,3])
 )
 
-model.save(f"yolo11n-seg-{classification}-{modelversion}.pt")
+model.save(f"YOLO/models/yolo11n-seg-{classification}-{modelversion}.pt")
 # Evaluate the model's performance on the validation set
 # metrics = model.val()
 #
