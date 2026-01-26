@@ -65,7 +65,7 @@ def create_folder_structure(dataset_name, destination_folder=None):
     if destination_folder is None:
         destination_folder = './SAM_ResNet'
     dataset_folder = os.path.join(destination_folder, 'datasets', dataset_name.split("/")[-1].lower())
-    dataset_folder += '-seg'
+    dataset_folder += '-seg-sam'
     if not os.path.exists(dataset_folder):
         os.makedirs(dataset_folder)
     if not os.path.exists(f"{dataset_folder}/train"):
