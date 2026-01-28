@@ -108,6 +108,6 @@ if __name__ == '__main__':
                 total += labels.size(0)
         print(f"Val Acc: {correct / total:.2%}")
 
-    torch.save(model, f"segment_classifier_full_model_{classification}.pt")
+    torch.save(model, f"./SAM_ResNet/resnet/segment_classifier_full_model_{classification}.pt")
     # model = torch.load("./ResNet18/segment_classifier_full_model.pt", weights_only=False).cuda()
     # model.eval()
