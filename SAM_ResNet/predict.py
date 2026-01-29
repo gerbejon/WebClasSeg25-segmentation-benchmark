@@ -20,16 +20,17 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from tools.parser import get_common_parser
 from tools._f1_score import f1_score_mask
-from visual_tools import mask_to_polygon
-from SAM.predict import SAM_segmentation
-from ResNet18.predict import ResNet18_segment_classifier
+from tools.visual_tools import mask_to_polygon
+from SAM_ResNet.sam2_repo.predict_sam import SAM_segmentation
+from SAM_ResNet.resnet.predict_resnet import ResNet18_segment_classifier
+from SAM_ResNet.resnet.train import SegmentClassifier
 
 
 # ---------------------------------------------------------------------
 # Setup functions
 # ---------------------------------------------------------------------
 def load_labels(classification: str):
-    with open(f"../id2label_{classification}.json", "r") as f:
+    with open(f"./data/id2label_{classification}.json", "r") as f:
         id2label = {int(k): v for k, v in json.load(f).items()}
     return id2label
 
@@ -47,6 +48,8 @@ def run_prediction(args):
     classification = args.classification
     dataset_dir = args.dataset_dir
     output_dir = args.output_dir
+    if output_dir is None:
+        output_dir = "./SAM_ResNet/results"
     save_results = args.save_results
 
     os.makedirs(output_dir, exist_ok=True)
@@ -61,19 +64,27 @@ def run_prediction(args):
     sam_model, resnet_model = setup_models(classification)
 
     # Collect test images
-    test_imgs = [
-        f for f in os.listdir(dataset_dir)
-        if f.endswith(".jpg")
-    ]
+    if dataset_dir is not None:
+        test_imgs = [
+            f for f in os.listdir(dataset_dir)
+            if f.endswith(".jpg")
+        ]
+    else:
+        test_imgs = [pid for pid in ds['test']['page_id']]
 
     result_dict = {}
     f1_list = []
     img_list = []
 
     for img_name in progressbar(test_imgs):
-        img_id = img_name.split(".")[0]
-        image_path = os.path.join(dataset_dir, img_name)
-        image = Image.open(image_path).convert("RGB")
+        if dataset_dir is None:
+            item = next(x for x in ds['test'] if x["page_id"] == img_name)
+            img_id = item['page_id']
+            image = Image.open(item['image']).convert("RGB")
+        else:
+            img_id = img_name.split(".")[0]
+            image_path = os.path.join(dataset_dir, img_name)
+            image = Image.open(image_path).convert("RGB")
 
         img_dict = {
             "id": img_id,
@@ -110,10 +121,10 @@ def run_prediction(args):
         # -----------------------------------------------------------------
         # F1 computation
         # -----------------------------------------------------------------
-        for row in ds["test"]:
-            if row["page_id"] == img_id:
-                mask_true = np.array(row["annotation"])
-                break
+        # for row in ds["test"]:
+        #     if row["page_id"] == img_id:
+        #         mask_true = np.array(row["annotation"])
+        #         break
 
         f1_dicts = f1_score_mask(
             mask=mask,
@@ -158,7 +169,6 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset_dir",
         type=str,
-        required=True,
         help="Directory containing test images",
     )
 
@@ -169,4 +179,6 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    # print(args)
+    # run_prediction(args)
     run_prediction(args)
