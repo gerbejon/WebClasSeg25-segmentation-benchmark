@@ -113,10 +113,6 @@ if __name__ == '__main__':
     dataset_name = f"gerbejon/WebClasSeg25-visual-{classification}"
     dataset = load_dataset(dataset_name)
 
-    # folder = create_folder_structure(dataset_name=dataset_name, destination_folder='/home/ubuntu/sam_2')
     folder = create_folder_structure(dataset_name=dataset_name)
 
-    # row = np.array(dataset['train'][0])
-    # mask = row['annotation']
-    # res = mask_to_coco_annotations(mask)
     fill_folder_structure(folder, dataset)

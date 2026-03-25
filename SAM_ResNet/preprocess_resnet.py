@@ -50,7 +50,6 @@ def create_dataset(sam_dataset_dir, dataset_dir):
                     # Image.fromarray(masked_image).save(os.path.join(dataset_dir, folder,  f'{str(counter)}.png'))
                     Image.fromarray(masked_image).save(os.path.join(dataset_dir, folder, str(category_id), f'{str(counter)}.png'))
                     counter += 1
-        # pd.DataFrame(metadata).to_csv(os.path.join(dataset_dir, folder, 'metadata.csv'), index=False)
 
 if __name__ == '__main__':
     parser = get_common_parser('Common parser')

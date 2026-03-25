@@ -80,7 +80,7 @@ def run_prediction(args):
         if dataset_dir is None:
             item = next(x for x in ds['test'] if x["page_id"] == img_name)
             img_id = item['page_id']
-            image = Image.open(item['image']).convert("RGB")
+            image = item['image'].convert("RGB")
         else:
             img_id = img_name.split(".")[0]
             image_path = os.path.join(dataset_dir, img_name)
@@ -121,11 +121,6 @@ def run_prediction(args):
         # -----------------------------------------------------------------
         # F1 computation
         # -----------------------------------------------------------------
-        # for row in ds["test"]:
-        #     if row["page_id"] == img_id:
-        #         mask_true = np.array(row["annotation"])
-        #         break
-
         f1_dicts = f1_score_mask(
             mask=mask,
             segm=classification,
@@ -179,6 +174,4 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    # print(args)
-    # run_prediction(args)
     run_prediction(args)

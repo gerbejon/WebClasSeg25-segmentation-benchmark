@@ -109,14 +109,11 @@ if __name__ == '__main__':
     print(args)
     classification = args.classification
     segmentation = True
-    # dataset_name = "gerbejon/WebClasSeg25-visual-fc"
     dataset_name = f"gerbejon/WebClasSeg25-visual-{classification}"
     segm = dataset_name.split("-")[-1]
 
 
     dataset = load_dataset(dataset_name)
     create_folder_structure(dataset_name=dataset_name)
-    # mask = np.array(dataset["train"][0]['annotation'])
-    # res = masks_to_yolo_labels(mask, mask.shape[0], mask.shape[1])
     preprocess(dataset_name=dataset_name)
     create_txt_files(dataset_name=dataset_name)
